@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>楼梯玩具</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Cache" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link type="text/css" rel="stylesheet" href="main.css">
+    <style>
+        body {
+            background-color: #cce0ff;
+            color: #000;
+        }
+
+        a {
+            color: #080;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="info">楼梯type1<br/>
+    计算demo<br/>
+    <video id="123" autoplay loop muted style="position: absolute;width:0;height:0">
+        <source src="dd.mp4">
+    </video>
+</div>
+<script src="three.js"></script>
+
+<!--<script src="unitil.js"></script>-->
+<script src="jquery-2.1.4
+.js"></script>
+<script src="vec2.js"></script>
+<script src="OBJLoader.js"></script>
+
+<script src="SimplifyModifier.js"></script>
+
+<script src="gltfloader.js"></script>
+<script src="inflate.min.js"></script>
+<script src="FBXLoader.js"></script>
+<script>
+    var transactionflag = undefined;
+</script>
+<script src="line.js"></script>
+<script src="Fire.js"></script>
+<script src="Stair_unitil.js"></script>
+<script src="Stair_type1.js"></script>
+<script src="Stair_type2.js"></script>
+<script src="Stair_type3.js"></script>
+<script src="lib_bearx.js"></script>
+<script>
+
+</script>
+<script type="module">
+
+    import Stats from './examples/jsm/libs/stats.module.js';
+    import {GUI} from './examples/jsm/libs/dat.gui.module.js';
+    import {OrbitControls} from './examples/jsm/controls/OrbitControls.js';
+
+    var params = {
+        enableWind: true,
+        showBall: false,
+    };
+    var FizzyText = function () {
+        this.long = 8;
+        this.width = 3.5;
+        this.height = 3.3;
+        this.stairnum = 12;
+        this.endtop = 5;
+        this.begintop = 0;
+        this.moveposition = 0;
+        this.Boardheight = 0.03;
+        this.Boardlength = 0.03;
+        this.Boardwidth = 3.5;
+        this.stairangle = 0;
+        this.SidepanelHeight = 0.18;
+        this.SidepanelWidth = 0.065;
+        this.SidepanelBegintop = 1;
+        this.SidepanelEndtop = 3;
+        this.SidepanelZposition = 0;
+        this.HandrailZposition = 0.314;
+        this.HandrailWidth = 0.0551;
+        this.HandrailhandlX = 0.05;
+        this.platformEndpoint = 0.15;
+        this.platformRot = -90;
+        this.platformlength = 0.982;
+        this.platformSidepanelHeight = 0.86;
+        this.platformSidepanelWidth = 0.065;
+        this.platformSidepanelZposition = 0;
+
+
+        // this.Sidepanel = 0.01;
+
+
+        this.displayOutline = false;
+        //this.explode = function() { ... };
+        // Define render logic ...
+    };
+
+    var FizzyText4 = function () {
+        this.long = 0.01;
+        this.width = 2.1;
+
+        this.innerwidth = 0.5;
+
+        this.height = 2.9;
+        this.stairnum = 25.1;
+        this.endtop = 5;
+        this.begintop = 0;
+        this.moveposition = 0;
+        this.Boardheight = 0.03;
+        this.Boardlength = 0.03;
+        this.Boardwidth = 2.1;
+        this.Boardinnerwidth = 0.5;
+
+        this.stairangle = 0;
+        this.SidepanelHeight = 0.18;
+        this.SidepanelWidth = 0.065;
+        this.SidepanelBegintop = 1;
+        this.SidepanelEndtop = 3;
+        this.SidepanelZposition = 0;
+        this.HandrailZposition = 0.314;
+        this.HandrailWidth = 0.0551;
+        this.HandrailhandlX = 0.05;
+        this.platformEndpoint = 0.15;
+        this.platformRot = 0;
+        this.platformlength = 0.03;
+
+
+        this.platformSidepanelHeight = 0.86;
+        this.platformSidepanelWidth = 0.065;
+        this.platformSidepanelZposition = 0;
+
+
+        // this.Sidepanel = 0.01;
+
+
+        this.displayOutline = false;
+        //this.explode = function() { ... };
+        // Define render logic ...
+    };
+
+
+    var FizzyText2 = function () {
+        this.light_positiom_X = -19;
+        this.light_positiom_Y = 17;
+        this.light_positiom_Z = 17;
+        this.displayOutline = false;
+
+    };
+
+    var Options = function () {
+        this.message = 'dat.gui';
+        this.speed = 0.8;
+        this.wireframe = false;
+        this.miansta = true;
+        this.BuildPlaneSide = false;
+        this.Handrail = false,
+            this.platform = true,
+            this.platformSidepane = false,
+            this.button = function () {
+            };
+    };
+
+    var Options2 = function () {
+        this.message = 'dat.gui';
+        this.speed = 0.8;
+        this.wireframe = false;
+        this.BuildPlaneSide = false;
+        this.Handrail = false,
+            this.platform = false,
+            this.U_type = false,
+            this.Glass = true,
+            this.railshow = true,
+            this.button = function () {
+            };
+    };
+    var Options3 = function () {
+        this.message = 'dat.gui';
+        this.speed = 0.8;
+        this.wireframe = false;
+        this.BuildPlaneSide = false;
+        this.Handrail = false,
+            this.platform = false,
+            this.Spiral_type = false,
+            this.Glass = true,
+            this.button = function () {
+            };
+    };
+
+    var FizzyText3 = function () {
+        this.long = 8;
+        this.width = 3.5;
+        this.height = 3.3;
+        this.stairnum = 12;
+        this.endtop = 5;
+        this.begintop = 0;
+        this.moveposition = 0;
+        this.Boardheight = 0.03;
+        this.Boardlength = 0.03;
+        this.Boardwidth = 3.5;
+        this.stairangle = 0;
+        this.SidepanelHeight = 0.18;
+        this.SidepanelWidth = 0.065;
+        this.SidepanelBegintop = 1;
+        this.SidepanelEndtop = 3;
+        this.SidepanelZposition = 0;
+        this.HandrailZposition = 0;
+        this.HandrailWidth = 0;
+
+        this.Glassheight = 0.75;
+        this.Glasswidth = 0.05;
+        this.Glasslength = -0.05;
+        this.GlasslZpostion = 0;
+
+
+    };
+    //全局用的二阶段楼梯 位移标记点
+
+    var options = new Options();
+    var options2 = new Options2();
+    var options3 = new Options3();
+
+    var text = new FizzyText();
+
+    var text2 = new FizzyText2();
+    var text3 = new FizzyText3();
+    var text4 = new FizzyText4();
+    let mixer;
+    const clock = new THREE.Clock();
+
+    var DAMPING = 0.03;
+    var DRAG = 1 - DAMPING;
+    var MASS = 0.1;
+    var restDistance = 25;
+
+    var xSegs = 10;
+    var ySegs = 10;
+
+    var clothFunction = plane(restDistance * xSegs, restDistance * ySegs);
+    var GRAVITY = 981 * 1.4;
+    var gravity = new THREE.Vector3(0, -GRAVITY, 0).multiplyScalar(MASS);
+    var TIMESTEP = 18 / 1000;
+    var TIMESTEP_SQ = TIMESTEP * TIMESTEP;
+
+    var pins = [];
+
+    var windForce = new THREE.Vector3(0, 0, 0);
+
+    var ballPosition = new THREE.Vector3(0, -45, 0);
+    var ballSize = 60; //40
+
+    var tmpForce = new THREE.Vector3();
+
+    var lastTime;
+
+
+    function plane(width, height) {
+
+        return function (u, v, target) {
+
+            var x = (u - 0.5) * width;
+            var y = (v + 0.5) * height;
+            var z = 0;
+
+            target.set(x, y, z);
+
+        };
+
+    }
+
+    function Particle(x, y, z, mass) {
+
+        this.position = new THREE.Vector3();
+        this.previous = new THREE.Vector3();
+        this.original = new THREE.Vector3();
+        this.a = new THREE.Vector3(0, 0, 0); // acceleration
+        this.mass = mass;
+        this.invMass = 1 / mass;
+        this.tmp = new THREE.Vector3();
+        this.tmp2 = new THREE.Vector3();
+
+        // init
+
+        clothFunction(x, y, this.position); // position
+        clothFunction(x, y, this.previous); // previous
+        clothFunction(x, y, this.original);
+
+    }
+
+    var long, width, height, stairnum, endtop, begintop, BuildPlaneSide,
+        wireframe, Boardheight, Boardlength, Boardwidth, moveposition, stairangle,
+        SidepanelHeight,
+        SidepanelWidth,
+        SidepanelBegintop,
+        SidepanelEndtop,
+        SidepanelZposition, Handrail, HandrailZposition, HandrailWidth, HandrailhandlX,
+
+        long2, width2, height2, stairnum2, endtop2, begintop2, BuildPlaneSide2,
+        wireframe2, Boardheight2, Boardlength2, Boardwidth2, moveposition2, stairangle2, U_type,
+        SidepanelHeight2,
+        SidepanelWidth2,
+        SidepanelBegintop2,
+        SidepanelEndtop2,
+        SidepanelZposition2, Handrail2, HandrailZposition2, HandrailWidth2,
+        miansta,
+        platform,
+        platformEndpoint,
+        platformRot,
+        platformlength,
+        platformSidepane,
+        platformSidepanelHeight,
+        platformSidepanelWidth,
+        platformSidepanelZposition,
+        Glass,
+        railshow,
+        Glasswidth, Glasslength, GlasslZpostion, Glassheight,
+
+
+        long3, width3, innerwidth3, height3, stairnum3, endtop3, begintop3, BuildPlaneSide3,
+        wireframe3, Boardheight3, Boardlength3, Boardwidth3, moveposition3, stairangle3,
+        SidepanelHeight3,
+        SidepanelWidth3,
+        SidepanelBegintop3,
+        SidepanelEndtop3,
+        SidepanelZposition3, Handrail3, HandrailZposition3, HandrailWidth3, HandrailhandlX3,
+        Spiral_type, Boardinnerwidth3;
+
+
+    long = text.long, width = text.width, height = text.height, stairnum = text.stairnum, wireframe = options.wireframe
+    BuildPlaneSide = options.BuildPlaneSide;
+    endtop = text.endtop, begintop = text.begintop  , Boardheight = text.Boardheight,
+        Boardlength = text.Boardlength, Boardwidth = text.Boardwidth, moveposition = text.moveposition,
+        stairangle = text.stairangle,
+        SidepanelHeight = text.SidepanelHeight,
+        SidepanelWidth = text.SidepanelWidth,
+        SidepanelBegintop = text.SidepanelBegintop,
+        SidepanelEndtop = text.SidepanelEndtop,
+        SidepanelZposition = text.SidepanelZposition,
+        Handrail = options.Handrail,
+        HandrailZposition = text.HandrailZposition,
+        HandrailWidth = text.HandrailWidth,
+        HandrailhandlX = text.HandrailhandlX,
+        miansta = options.miansta,
+
+        long2 = text3.long,
+        width2 = text3.width,
+        height2 = text3.height,
+        stairnum2 = text3.stairnum,
+        wireframe2 = options2.wireframe,
+        U_type = options2.U_type,
+        BuildPlaneSide2 = options2.BuildPlaneSide;
+    endtop2 = text3.endtop,
+        begintop2 = text3.begintop,
+        Boardheight2 = text3.Boardheight,
+        Boardlength2 = text3.Boardlength,
+        Boardwidth2 = text3.Boardwidth,
+        moveposition2 = text3.moveposition,
+        stairangle2 = text3.stairangle,
+        SidepanelHeight2 = text3.SidepanelHeight,
+        SidepanelWidth2 = text3.SidepanelWidth,
+        SidepanelBegintop2 = text3.SidepanelBegintop,
+        SidepanelEndtop2 = text3.SidepanelEndtop,
+        SidepanelZposition2 = text3.SidepanelZposition,
+        Handrail2 = options2.Handrail,
+        HandrailZposition2 = text3.HandrailZposition,
+        HandrailWidth2 = text3.HandrailWidth,
+        platform = options.platform,
+        platformSidepane = options.platformSidepane,
+        platformEndpoint = text.platformEndpoint,
+        platformRot = text.platformRot,
+        platformlength = text.platformlength,
+        platformSidepanelHeight = text.platformSidepanelHeight,
+        platformSidepanelWidth = text.platformSidepanelWidth,
+        platformSidepanelZposition = text.platformSidepanelZposition;
+
+    Glasswidth = text3.Glasswidth, Glasslength = text3.Glasslength, GlasslZpostion = text3.GlasslZpostion, Glassheight = text3.Glassheight;
+    Glass = options2.Glass;
+    railshow = options2.railshow;
+
+    long3 = text4.long,
+        width3 = text4.width,
+        innerwidth3 = text4.innerwidth,
+        height3 = text4.height,
+        stairnum3 = text4.stairnum,
+        endtop3 = text4.endtop,
+        begintop3 = text4.begintop,
+        moveposition3 = text4.moveposition,
+        Boardheight3 = text4.Boardheight,
+        Boardlength3 = text4.Boardlength,
+        Boardwidth3 = text4.Boardwidth,
+        Boardinnerwidth3 = text4.Boardinnerwidth,
+        BuildPlaneSide3 = options3.BuildPlaneSide,
+        // miansta = options.miansta ,
+        Handrail3 = options3.Handrail,
+        HandrailZposition3 = text4.HandrailZposition,
+        HandrailWidth3 = text4.HandrailWidth,
+        HandrailhandlX3 = text4.HandrailhandlX,
+
+        stairangle3 = text4.stairangle,
+        SidepanelHeight3 = text4.SidepanelHeight,
+        SidepanelWidth3 = text4.SidepanelWidth,
+        SidepanelBegintop3 = text4.SidepanelBegintop,
+        SidepanelEndtop3 = text4.SidepanelEndtop,
+        SidepanelZposition3 = text4.SidepanelZposition;
+    Spiral_type = options3.Spiral_type;
+    wireframe3 = options3.wireframe
+
+    function simulate(time) {
+        if (!lastTime) {
+            lastTime = time;
+            return;
+        }
+
+        if (long != text.long ||
+            width != text.width ||
+            height != text.height ||
+            stairnum != text.stairnum ||
+            stairangle != text.stairangle ||
+            endtop != text.endtop ||
+            begintop != text.begintop ||
+            moveposition != text.moveposition ||
+            Boardheight != text.Boardheight ||
+            Boardlength != text.Boardlength ||
+            Boardwidth != text.Boardwidth ||
+            SidepanelHeight != text.SidepanelHeight ||
+            SidepanelWidth != text.SidepanelWidth ||
+            SidepanelBegintop != text.SidepanelBegintop ||
+            SidepanelEndtop != text.SidepanelEndtop ||
+            SidepanelZposition != text.SidepanelZposition ||
+            wireframe != options.wireframe ||
+            BuildPlaneSide != options.BuildPlaneSide ||
+            Handrail != options.Handrail ||
+            HandrailZposition != text.HandrailZposition ||
+            HandrailhandlX != text.HandrailhandlX ||
+            HandrailWidth != text.HandrailWidth ||
+            U_type != options2.U_type ||
+            miansta != options.miansta ||
+
+            platform != options.platform ||
+            platformSidepane != options.platformSidepane ||
+
+            platformEndpoint != text.platformEndpoint ||
+            platformRot != text.platformRot ||
+            platformlength != text.platformlength ||
+            platformSidepanelHeight != text.platformSidepanelHeight ||
+            platformSidepanelWidth != text.platformSidepanelWidth ||
+            platformSidepanelZposition != text.platformSidepanelZposition ||
+
+
+            Glass != options2.Glass ||
+            railshow != options2.railshow ||
+
+            Glasswidth != text3.Glasswidth ||
+            Glasslength != text3.Glasslength ||
+            Glassheight != text3.Glassheight ||
+            GlasslZpostion != text3.GlasslZpostion
+
+
+        ) {
+            if (options2.U_type) {
+                (text.platformRot != 0 && text.platformRot > 0) ? text.platformRot = 90 : text.platformRot = -90;
+
+                (text.platformlength <= text.Boardwidth) ? text.platformlength = text.Boardwidth + 0.03 : void 0;
+
+            }
+
+
+            text.platformRot = Math.ceil(text.platformRot);
+            var sd = rem(scene, text, options, text3, options2);
+            long = text.long,
+                width = text.width,
+                height = text.height,
+                stairnum = text.stairnum,
+                endtop = text.endtop,
+                begintop = text.begintop,
+                moveposition = text.moveposition,
+                Boardheight = text.Boardheight,
+                Boardlength = text.Boardlength,
+                Boardwidth = text.Boardwidth,
+                wireframe = options.wireframe,
+                BuildPlaneSide = options.BuildPlaneSide,
+                // miansta = options.miansta ,
+                Handrail = options.Handrail,
+                HandrailZposition = text.HandrailZposition,
+                HandrailWidth = text.HandrailWidth,
+                HandrailhandlX = text.HandrailhandlX,
+
+                stairangle = text.stairangle,
+                SidepanelHeight = text.SidepanelHeight,
+                SidepanelWidth = text.SidepanelWidth,
+                SidepanelBegintop = text.SidepanelBegintop,
+                SidepanelEndtop = text.SidepanelEndtop,
+                SidepanelZposition = text.SidepanelZposition,
+
+                // platform = options.platform,
+                platformSidepane = options.platformSidepane,
+
+                platformEndpoint = text.platformEndpoint,
+                platformRot = text.platformRot;
+            platformlength = text.platformlength;
+
+            platformSidepanelHeight = text.platformSidepanelHeight;
+            platformSidepanelWidth = text.platformSidepanelWidth;
+            platformSidepanelZposition = text.platformSidepanelZposition;
+
+
+            //墙纸同步参数
+            U_type = options2.U_type ,
+                text3.width = text.width + 0
+            text3.width = text.width + 0
+            text3.long = text.long + 0
+            text3.height = text.height + 0
+            text3.stairnum = text.stairnum + 0
+            text3.stairangle = text.stairangle + 0
+            text3.Boardheight = text.Boardheight + 0
+            text3.Boardlength = text.Boardlength + 0
+            text3.Boardwidth = text.Boardwidth + 0
+
+
+        }
+        if (
+            long2 != text3.long ||
+            width2 != text3.width ||
+            height2 != text3.height ||
+            stairnum2 != text3.stairnum ||
+            stairangle2 != text3.stairangle ||
+            endtop2 != text3.endtop ||
+            begintop2 != text3.begintop ||
+            moveposition2 != text3.moveposition ||
+            Boardheight2 != text3.Boardheight ||
+            Boardlength2 != text3.Boardlength ||
+            Boardwidth2 != text3.Boardwidth ||
+            SidepanelHeight2 != text3.SidepanelHeight ||
+            SidepanelWidth2 != text3.SidepanelWidth ||
+            SidepanelBegintop2 != text3.SidepanelBegintop ||
+            SidepanelEndtop2 != text3.SidepanelEndtop ||
+            SidepanelZposition2 != text3.SidepanelZposition ||
+            wireframe2 != options2.wireframe ||
+            BuildPlaneSide2 != options2.BuildPlaneSide ||
+            Handrail2 != options2.Handrail ||
+            HandrailZposition2 != text3.HandrailZposition ||
+            HandrailWidth2 != text3.HandrailWidth ||
+            platform != options.platform ||
+            miansta != options.miansta ||
+
+            railshow != options2.railshow ||
+            Glass != options2.Glass ||
+            Glasswidth != text3.Glasswidth ||
+            Glasslength != text3.Glasslength ||
+            Glassheight != text3.Glassheight ||
+            GlasslZpostion != text3.GlasslZpostion
+
+        ) {
+
+            var sd = rem2(scene, text, options, text3, options2)
+            long2 = text3.long,
+                width2 = text3.width,
+                height2 = text3.height,
+                stairnum2 = text3.stairnum,
+                endtop2 = text3.endtop,
+                begintop2 = text3.begintop,
+                moveposition2 = text3.moveposition,
+                Boardheight2 = text3.Boardheight,
+                Boardlength2 = text3.Boardlength,
+                Boardwidth2 = text3.Boardwidth,
+                wireframe2 = options2.wireframe,
+                BuildPlaneSide2 = options2.BuildPlaneSide,
+                Handrail2 = options2.Handrail,
+                HandrailZposition2 = text3.HandrailZposition,
+                HandrailWidth2 = text3.HandrailWidth,
+                stairangle2 = text3.stairangle,
+                SidepanelHeight2 = text3.SidepanelHeight,
+                SidepanelWidth2 = text3.SidepanelWidth,
+                SidepanelBegintop2 = text3.SidepanelBegintop,
+                SidepanelEndtop2 = text3.SidepanelEndtop,
+                SidepanelZposition2 = text3.SidepanelZposition,
+                miansta = options.miansta ,
+                platform = options.platform;
+            // Glass = options2.Glass;
+            // Glasswidth = text3.Glasswidth,
+            //     Glasslength = text3.Glasslength,
+            //     Glassheight = text3.Glassheight,
+            //     GlasslZpostion = text3.GlasslZpostion;
+            railshow = options2.railshow;
+
+
+        }
+
+        if (long3 != text4.long ||
+            width3 != text4.width ||
+            innerwidth3 != text4.innerwidth ||
+            height3 != text4.height ||
+            stairnum3 != text4.stairnum ||
+            stairangle3 != text4.stairangle ||
+            endtop3 != text4.endtop ||
+            begintop3 != text4.begintop ||
+            moveposition3 != text4.moveposition ||
+            Boardheight3 != text4.Boardheight ||
+            Boardlength3 != text4.Boardlength ||
+            Boardwidth3 != text4.Boardwidth ||
+            Boardinnerwidth3 != text4.Boardinnerwidth ||
+            SidepanelHeight3 != text4.SidepanelHeight ||
+            SidepanelWidth3 != text4.SidepanelWidth ||
+            SidepanelBegintop3 != text4.SidepanelBegintop ||
+            SidepanelEndtop3 != text4.SidepanelEndtop ||
+            SidepanelZposition3 != text4.SidepanelZposition ||
+            BuildPlaneSide3 != options3.BuildPlaneSide ||
+            Handrail3 != options3.Handrail ||
+            HandrailZposition3 != text4.HandrailZposition ||
+            HandrailhandlX3 != text4.HandrailhandlX ||
+            HandrailWidth3 != text4.HandrailWidth ||
+            Spiral_type != options3.Spiral_type ||  //弯曲
+            wireframe3 != options3.wireframe ||
+            Glass != options2.Glass ||
+            Glasswidth != text3.Glasswidth ||
+            Glasslength != text3.Glasslength ||
+            Glassheight != text3.Glassheight ||
+            GlasslZpostion != text3.GlasslZpostion
+
+        // miansta != options.miansta ||
+        //
+        // platform != options.platform ||
+        // platformSidepane != options.platformSidepane ||
+        //
+        // platformEndpoint != text.platformEndpoint ||
+        // platformRot != text.platformRot ||
+        // platformlength != text.platformlength ||
+        // platformSidepanelHeight != text.platformSidepanelHeight ||
+        // platformSidepanelWidth != text.platformSidepanelWidth ||
+        // platformSidepanelZposition != text.platformSidepanelZposition||
+        //
+        //
+        // Glass != options2.Glass ||
+        // Glasswidth != text3.Glasswidth||
+        // Glasslength != text3.Glasslength ||
+        // Glassheight != text3.Glassheight ||
+        // GlasslZpostion != text3.GlasslZpostion
+
+
+        ) {
+            var sd = rem3(scene, text, options, text4, options3, options2, text3);
+            long3 = text4.long,
+                width3 = text4.width,
+                innerwidth3 = text4.innerwidth,
+                height3 = text4.height,
+                stairnum3 = text4.stairnum,
+                endtop3 = text4.endtop,
+                begintop3 = text4.begintop,
+                moveposition3 = text4.moveposition,
+                Boardheight3 = text4.Boardheight,
+                Boardlength3 = text4.Boardlength,
+                Boardinnerwidth3 = text4.Boardinnerwidth,
+                Boardwidth3 = text4.Boardwidth,
+                BuildPlaneSide3 = options3.BuildPlaneSide,
+                // miansta = options.miansta ,
+                Handrail3 = options3.Handrail,
+                HandrailZposition3 = text4.HandrailZposition,
+                HandrailWidth3 = text4.HandrailWidth,
+                HandrailhandlX3 = text4.HandrailhandlX,
+
+                stairangle3 = text4.stairangle,
+                SidepanelHeight3 = text4.SidepanelHeight,
+                SidepanelWidth3 = text4.SidepanelWidth,
+                SidepanelBegintop3 = text4.SidepanelBegintop,
+                SidepanelEndtop3 = text4.SidepanelEndtop,
+                SidepanelZposition3 = text4.SidepanelZposition;
+
+            Spiral_type = options3.Spiral_type;  //弯曲pe
+            wireframe3 = options3.wireframe
+            Glass = options2.Glass;
+            Glasswidth = text3.Glasswidth,
+                Glasslength = text3.Glasslength,
+                Glassheight = text3.Glassheight,
+                GlasslZpostion = text3.GlasslZpostion;
+        }
+
+
+    }
+
+    /* testing cloth simulation */
+
+    var container, stats;
+    var camera, scene, renderer;
+
+    var clothGeometry;
+    var loutimianm;
+    var object;
+
+    init();
+    animate();
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    function animate() {
+
+
+        requestAnimationFrame(animate);
+
+        var time = Date.now();
+
+        var windStrength = Math.cos(time / 7000) * 20 + 40;
+
+        windForce.set(Math.sin(time / 2000), Math.cos(time / 3000), Math.sin(time / 1000));
+        windForce.normalize();
+        windForce.multiplyScalar(windStrength);
+        LightA.position.x = text2.light_positiom_X;
+        LightA.position.y = text2.light_positiom_Y;
+        LightA.position.z = text2.light_positiom_Z;
+        const delta = clock.getDelta();
+        if (mixer) mixer.update(delta);
+
+        simulate(time);
+        render();
+        stats.update();
+
+    }
+
+    function render() {
+
+        renderer.render(scene, camera);
+
+
+    }
+
+    var LightA, cameraA;
+
+    function init() {
+
+        container = document.createElement('div');
+        document.body.appendChild(container);
+
+        // scene
+
+        var o3d = new THREE.Object3D()
+        o3d.name = "type2louti"
+
+        scene = new THREE.Scene();
+        //  scene.rotation.x = -Math.PI / 2;
+        scene.background = new THREE.Color(0xcce0ff);
+        scene.fog = new THREE.Fog(0xcce0ff, 50, 200);
+        var axes = new THREE.AxisHelper(1);
+        axes.position.x = 0;
+        axes.position.y = 0;
+        scene.add(axes)
+        // camera
+        camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 10000);
+        camera.position.set(-10.538559776532686,-20.006854785405107, 19.554576207691373);
+
+        // 0.0067606009330766215
+        // y: -17.21948691717071
+        // z: 6.456931701547064
+
+        cameraA = camera;
+
+        // camera.rotation.x = -Math.PI / 2;
+        // var rotMatrix4 = new THREE.Matrix4();
+        // rotMatrix4.makeRotationY(-Math.PI / 2);
+        // camera.matrixWorldInverse.makeRotationX(-Math.PI / 2);
+        camera.up.set(0, 0, 1);
+        camera.far = 50
+        camera.fov = 30
+        var AmbientLight2 = new THREE.AmbientLight(0x666666, 1.1)
+        camera.lookAt(11, -4, 0)
+
+        scene.add(AmbientLight2);
+
+
+        var light = new THREE.DirectionalLight(0xffffff, 1, 100);
+
+        light.castShadow = true;            // default false
+        scene.add(light);
+
+        light.shadow.mapSize.width = 4096;  // default
+        light.shadow.mapSize.height = 4096; // default
+        light.shadow.camera.near = 0.5;    // default
+        light.shadow.camera.far = 500;     // default
+
+        var d = 60;
+
+        light.shadow.camera.left = -d;
+        light.shadow.camera.right = d;
+        light.shadow.camera.top = d;
+        light.shadow.camera.bottom = -d;
+
+
+        var helper = new THREE.CameraHelper(light.shadow.camera);
+        scene.add(helper);
+
+        LightA = light;
+
+        // cloth material
+
+        var loader = new THREE.TextureLoader();
+
+        var loader2 = new THREE.TextureLoader();
+
+        var textureLoader2 = loader2.load('./examples/textures/terrain/grasslight-big-nm.jpg');
+
+        //  textureLoader2.wrapS = textureLoader2.wrapT = THREE.RepeatWrapping;
+        // textureLoader2.repeat.set(1, 1);
+        //  textureLoader2.anisotropy = 16;
+        textureLoader2.encoding = THREE.sRGBEncoding;
+
+        var video = document.getElementById('123');
+        var texture = new THREE.VideoTexture(video);
+        texture.minFilter = THREE.LinearFilter;
+        texture.magFilter = THREE.LinearFilter;
+        texture.format = THREE.RGBFormat;
+        var material = new THREE.ShadowMaterial();
+        material.side = THREE.DoubleSide;
+        // material.map = texture;
+
+
+        var groundTexture = loader.load('./examples/textures/terrain/1.jpg');
+        groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+        // groundTexture.repeat.set(2, 2);
+        groundTexture.anisotropy = 16;
+        groundTexture.encoding = THREE.sRGBEncoding;
+
+
+        var mesh = new THREE.Mesh(new THREE.PlaneBufferGeometry(50, 50), material);
+        mesh.position.z = 0;
+        mesh.position.x = 0;
+        mesh.position.y = 0;
+        // mesh.rotation.x = Math.PI / 2;
+        mesh.receiveShadow = true;
+        scene.add(mesh);
+
+        var tr = new THREE.ImageUtils.loadTexture('uv_grid.jpg');
+        tr.wrapS = THREE.RepeatWrapping;
+        tr.wrapT = THREE.RepeatWrapping;
+        var cubeMaterial = new THREE.MeshLambertMaterial({
+            map: tr
+
+        });
+
+        var material = new THREE.MeshStandardMaterial({flatShading: false, map: tr});
+
+
+        var material2 = new THREE.MeshStandardMaterial({color: 0xCD6839, flatShading: false, map: tr});
+
+        var material3 = new THREE.MeshStandardMaterial({color: 0x40E0D0, flatShading: false, map: tr});
+        material3.transparent = true;
+        material3.opacity = 1;
+
+        var material4 = new THREE.MeshStandardMaterial({color: 0x90EE90, flatShading: false, map: tr});
+
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material);
+        //  mesh.position.y = -250;
+        //  mesh.position.z = 1;
+        //mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "louti"
+        mesh.castShadow = true;
+        scene.add(mesh);
+        // renderer
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material2);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "loutiboard"
+        mesh.castShadow = true;
+        scene.add(mesh);
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material3);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "Sidepanel"
+        mesh.castShadow = true;
+        scene.add(mesh);
+
+
+        var textureLoader = new THREE.TextureLoader();
+
+        var texture = textureLoader.load('rail/h.jpg');
+        var materialH = new THREE.MeshStandardMaterial({map: texture, flatShading: false, map: tr});
+
+        materialH.metalness = 1.0;
+
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, materialH);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "Handrail"
+        mesh.castShadow = true;
+        scene.add(mesh);
+        ////////////////////////////////////////////
+        // 第二阶层楼梯 begin
+
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material);
+        //  mesh.position.y = -250;
+        //  mesh.position.z = 1;
+        //mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "louti2"
+        mesh.castShadow = true;
+        o3d.add(mesh);
+        // renderer
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material2);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "loutiboard2"
+        mesh.castShadow = true;
+        o3d.add(mesh);
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material3);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "Sidepanel2"
+        mesh.castShadow = true;
+        o3d.add(mesh);
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material4);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "Handrail2"
+        mesh.castShadow = true;
+        o3d.add(mesh);
+        //////////end
+
+        //扶手栏杆2
+        var obj03d = new THREE.Object3D();
+        obj03d.name = "railobjgroup2"
+
+        var objgroup = new THREE.Group();
+        objgroup.name = "railobjgroupnext2"
+        obj03d.add(objgroup)
+
+        //obj03d.add(mesh)
+        scene.add(obj03d);
+
+        scene.add(o3d);
+
+        var material5 = new THREE.MeshStandardMaterial({color: 0x473C8B, flatShading: false, map: tr});
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material5);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "platform"
+        mesh.castShadow = true;
+
+        scene.add(mesh);
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material3);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "platformSidepanel"
+        mesh.castShadow = true;
+
+        scene.add(mesh);
+
+
+        //扶手栏杆
+
+        var textureLoader = new THREE.TextureLoader();
+
+        var texture = textureLoader.load('rail/h.jpg');
+        var material6 = new THREE.MeshStandardMaterial({map: texture, flatShading: false, map: tr});
+
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material3);
+
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "railobj";
+        mesh.visible = true;
+        mesh.castShadow = true;
+        scene.add(mesh);
+
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material3);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "railobjPL";
+        mesh.visible = false;
+        mesh.castShadow = true;
+        scene.add(mesh);
+
+
+        var obj03d = new THREE.Object3D();
+        obj03d.name = "railobjgroup"
+
+        var objgroup = new THREE.Group();
+        objgroup.name = "railobjgroupnext"
+        obj03d.add(objgroup)
+
+        //obj03d.add(mesh)
+        scene.add(obj03d);
+
+
+        //扶手栏杆平台
+        var obj03d = new THREE.Object3D();
+        obj03d.name = "railobjgroup3"
+
+        var objgroup = new THREE.Group();
+        objgroup.name = "railobjgroupnext3"
+        obj03d.add(objgroup)
+
+        //obj03d.add(mesh)
+        scene.add(obj03d);
+
+        // instantiate a loader
+        var loader = new THREE.OBJLoader();
+
+
+        // loader.load(
+        //     // resource URL
+        //     'rail/product_re' +
+        //     '.obj',
+        //     // called when resource is loaded
+        //     function (object) {
+        //         var railmesh = scene.getObjectByName("railobj");
+        //         railmesh.geometry = object.children[0].geometry;
+        //     },
+        //
+        //
+        //     // called when loading is in progresses
+        //     function (xhr) {
+        //
+        //         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        //
+        //     },
+        //     // called when loading has errors
+        //     function (error) {
+        //         console.log('An error happened');
+        //     }
+        // );
+
+
+        // loader.load(
+        //     // resource URL
+        //     'rail/product_re' +
+        //     '.obj',
+        //     // called when resource is loaded
+        //     function (object) {
+        //         var railmesh = scene.getObjectByName("railobjPL");
+        //         railmesh.geometry = object.children[0].geometry
+        //
+        //     },
+        //     // called when loading is in progresses
+        //     function (xhr) {
+        //
+        //         console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+        //
+        //     },
+        //     // called when loading has errors
+        //     function (error) {
+        //         console.log('An error happened');
+        //     }
+        // );
+
+        // var loader = new THREE.FBXLoader();
+        // loader.load( 'fbx/product.fbx', function ( object ) {
+        //
+        //     // mixer = new THREE.AnimationMixer( object );
+        //     //
+        //     // const action = mixer.clipAction( object.animations[ 0 ] );
+        //     // action.play();
+        //
+        //     object.traverse( function ( child ) {
+        //
+        //         if ( child.isMesh ) {
+        //
+        //             child.castShadow = true;
+        //             child.receiveShadow = true;
+        //
+        //         }
+        //
+        //     } );
+        //
+        //     object.scale.set(0.01,0.01,0.01);
+        //     object.rotateX(Math.PI/2)
+        //
+        //     $.ajax({
+        //         type: "GET", //GET还是POST,不是必须
+        //         url: "fbx/VrayMaterials.json",
+        //         success: function(data) {
+        //
+        //
+        //             scene.add( object );
+        //
+        //         }
+        //     });
+        //
+        //
+        // })
+
+
+        var materialglass = new THREE.MeshStandardMaterial({color: 0xF0F8FF, flatShading: false, map: tr});
+        materialglass.transparent = true;
+        materialglass.opacity = 0.7
+        //栏杆玻璃
+        var mesh = new THREE.Mesh(new THREE.Geometry, materialglass);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "Glass1"
+        mesh.castShadow = true;
+        scene.add(mesh);
+
+        var materialglass = new THREE.MeshStandardMaterial({color: 0xF0F8FF, flatShading: false, map: tr});
+        materialglass.transparent = true;
+        materialglass.opacity = 0.7
+        //栏杆玻璃
+        var mesh = new THREE.Mesh(new THREE.Geometry, materialglass);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "Glass2"
+        mesh.castShadow = true;
+        o3d.add(mesh);
+
+
+        var materialglass = new THREE.MeshStandardMaterial({color: 0xF0F8FF, flatShading: false, map: tr});
+        materialglass.transparent = true;
+        materialglass.opacity = 0.7
+        //栏杆玻璃
+
+
+        //旋转梯子 组
+
+        var o3d = new THREE.Object3D();
+        o3d.name = "Spiral_group"
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "Spiral_louti"
+        mesh.castShadow = true;
+        o3d.add(mesh);
+        scene.add(o3d);
+
+
+        var mesh = new THREE.Mesh(new THREE.Geometry, material);
+        // mesh.position.y = -250;
+        // mesh.position.z = 1;
+        //  mesh.rotation.x = -Math.PI / 2;
+        mesh.receiveShadow = true;
+        mesh.name = "Spiral_louti_bottom"
+        mesh.castShadow = true;
+        o3d.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.name = "Spiral_louti_inside"
+        o3d.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.name = "Spiral_louti_outside"
+        o3d.add(mesh);
+
+
+        var mesh = mesh.clone()
+        mesh.material = material2
+        mesh.name = "Spiral_louti_board"
+        o3d.add(mesh);
+
+
+        var mesh = mesh.clone()
+        mesh.material = material2
+        mesh.name = "Spiral_louti_board_inside"
+        o3d.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material2
+        mesh.name = "Spiral_louti_board_outside"
+        o3d.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material4
+        mesh.name = "Spiral_Handrail"
+        o3d.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material4
+        mesh.name = "Spiral_Rail"
+        o3d.add(mesh);
+
+
+        var o3dSidepanel = new THREE.Object3D();
+        o3dSidepanel.name = "Spiral_Sidepanel_GROUP"
+
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel"
+        o3dSidepanel.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel_top"
+        o3dSidepanel.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel_inside"
+        o3dSidepanel.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel_Outside"
+        o3dSidepanel.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel_bottom"
+        o3dSidepanel.add(mesh);
+
+        o3d.add(o3dSidepanel)
+
+
+        var o3dGlass = new THREE.Object3D();
+        o3dGlass.name = "Spiral_Glass_GROUP"
+
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass"
+        o3dGlass.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass_top"
+        o3dGlass.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass_inside"
+        o3dGlass.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass_Outside"
+        o3dGlass.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass_bottom"
+        o3dGlass.add(mesh);
+
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass2"
+        o3dGlass.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass_top2"
+        o3dGlass.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass_inside2"
+        o3dGlass.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass_Outside2"
+        o3dGlass.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = materialglass
+        mesh.name = "Spiral_Glass_bottom2"
+        o3dGlass.add(mesh);
+
+
+        o3d.add(o3dGlass)
+
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel2"
+        o3dSidepanel.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel_top2"
+        o3dSidepanel.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel_inside2"
+        o3dSidepanel.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel_Outside2"
+        o3dSidepanel.add(mesh);
+
+        var mesh = mesh.clone()
+        mesh.material = material3
+        mesh.name = "Spiral_Sidepanel_bottom2"
+        o3dSidepanel.add(mesh);
+
+        o3d.add(o3dSidepanel)
+
+        // //测试
+
+        // var jsonobject = '{"meta": {}, "data": [{"type": "roomsdata", "rooms": [{"roomarea": [{"x": 0.2, "y": -2.62}, {"x": 0.2, "y": -2.8}, {"x": 1.78, "y": -2.8}, {"x": 1.78, "y": -2.62}, {"x": 0.2, "y": -2.62}], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.3}, {"roomarea": [{"x": 2.34, "y": -1.87}, {"x": 2.34, "y": -2.05}, {"x": 2.69, "y": -2.05}, {"x": 2.69, "y": -1.87}, {"x": 2.34, "y": -1.87}], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.07}, {"roomarea": [{"x": 1.97, "y": -0.91}, {"x": 1.97, "y": -1.99}, {"x": 2.25, "y": -1.99}, {"x": 2.25, "y": -1.81}, {"x": 2.69, "y": -1.81}, {"x": 2.69, "y": -0.91}, {"x": 1.97, "y": -0.91}], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.71}, {"roomarea": [{"x": 2.82, "y": -0.91}, {"x": 2.82, "y": -2.0}, {"x": 3.08, "y": -2.0}, {"x": 3.08, "y": -2.06}, {"x": 3.18, "y": -2.06}, {"x": 3.18, "y": -2.8}, {"x": 5.81, "y": -2.8}, {"x": 5.81, "y": -0.91}, {"x": 2.82, "y": -0.91}], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 5.41}, {"roomarea": [{"x": 0.93, "y": -0.91}, {"x": 0.88, "y": -0.91}, {"x": 0.88, "y": -0.96}, {"x": 0.83, "y": -0.96}, {"x": 0.83, "y": -1.02}, {"x": 0.77, "y": -1.02}, {"x": 0.72, "y": -1.02}, {"x": 0.72, "y": -1.07}, {"x": 0.67, "y": -1.07}, {"x": 0.67, "y": -1.13}, {"x": 0.62, "y": -1.13}, {"x": 0.56, "y": -1.13}, {"x": 0.56, "y": -1.18}, {"x": 0.51, "y": -1.18}, {"x": 0.51, "y": -1.23}, {"x": 0.45, "y": -1.23}, {"x": 0.45, "y": -1.28}, {"x": 0.39, "y": -1.28}, {"x": 0.39, "y": -1.33}, {"x": 0.34, "y": -1.33}, {"x": 0.28, "y": -1.38}, {"x": 0.23, "y": -1.38}, {"x": 0.23, "y": -1.44}, {"x": 0.18, "y": -1.44}, {"x": 0.18, "y": -2.59}, {"x": 0.23, "y": -2.59}, {"x": 1.78, "y": -2.59}, {"x": 1.78, "y": -2.02}, {"x": 1.87, "y": -2.02}, {"x": 1.87, "y": -0.91}, {"x": 0.93, "y": -0.91}], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 2.6}, {"roomarea": [{"x": 1.88, "y": -2.08}, {"x": 1.88, "y": -2.8}, {"x": 3.11, "y": -2.8}, {"x": 3.11, "y": -2.15}, {"x": 3.02, "y": -2.15}, {"x": 3.02, "y": -2.08}, {"x": 1.88, "y": -2.08}], "roomname": "\u8d70\u5eca", "roomid": "0", "roommeasure": 0.91}], "outlinewalls": [{"x1": 0.04, "y1": -0.76, "x2": 0.04, "y2": -2.96}, {"x1": 0.04, "y1": -2.96, "x2": 5.97, "y2": -2.96}, {"x1": 5.97, "y1": -2.96, "x2": 5.97, "y2": -0.76}, {"x1": 5.97, "y1": -0.76, "x2": 0.04, "y2": -0.76}], "doors": [], "windows": [{"x": 2.19, "y": -2.88, "width": 0.32, "height": 0.15, "rot": 0}, {"x": 0.98, "y": -2.6, "width": 1.57, "height": 0.05, "rot": 0}, {"x": 1.83, "y": -2.32, "width": 0.06, "height": 0.34, "rot": 0}, {"x": 5.9, "y": -2.31, "width": 0.14, "height": 0.41, "rot": 0}, {"x": 2.51, "y": -2.06, "width": 0.34, "height": 0.05, "rot": 0}, {"x": 2.11, "y": -2.03, "width": 0.26, "height": 0.07, "rot": 0}, {"x": 0.11, "y": -2.02, "width": 0.14, "height": 0.56, "rot": 0}, {"x": 5.9, "y": -1.4, "width": 0.14, "height": 0.42, "rot": 0}]}]}'
+
+        // var jsonobject2 = '{"meta": {}, "data": [{"type": "roomsdata", "rooms": [{"roomarea": [{"x": 3.83, "y": -4.32}, {"x": 3.83, "y": -4.58}, {"x": 4.11, "y": -4.58}, {"x": 4.11, "y": -4.32}, {"x": 3.83, "y": -4.32}], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.08}, {"roomarea": [{"x": 2.36, "y": -3.99}, {"x": 2.36, "y": -4.58}, {"x": 2.66, "y": -4.58}, {"x": 2.66, "y": -3.99}, {"x": 2.36, "y": -3.99}], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.19}, {"roomarea": [{"x": 3.45, "y": -3.94}, {"x": 3.45, "y": -4.58}, {"x": 3.73, "y": -4.58}, {"x": 3.73, "y": -4.28}, {"x": 3.55, "y": -4.28}, {"x": 3.55, "y": -4.23}, {"x": 3.73, "y": -4.23}, {"x": 3.73, "y": -3.94}, {"x": 3.45, "y": -3.94}], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.19}, {"roomarea": [{"x": 2.03, "y": -2.19}, {"x": 2.03, "y": -2.62}, {"x": 2.36, "y": -2.62}, {"x": 2.36, "y": -2.19}, {"x": 2.03, "y": -2.19}], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.15}, {"roomarea": [{"x": 1.98, "y": -1.73}, {"x": 1.98, "y": -2.1}, {"x": 2.31, "y": -2.1}, {"x": 2.31, "y": -1.73}, {"x": 1.98, "y": -1.73}], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.13}, {"roomarea": [{"x": 2.28, "y": -1.12}, {"x": 2.23, "y": -1.12}, {"x": 2.17, "y": -1.12}, {"x": 2.17, "y": -1.17}, {"x": 2.11, "y": -1.17}, {"x": 2.06, "y": -1.17}, {"x": 2.06, "y": -1.22}, {"x": 1.98, "y": -1.22}, {"x": 1.98, "y": -1.69}, {"x": 2.28, "y": -1.69}, {"x": 2.28, "y": -1.12}], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.18}, {"roomarea": [{"x": 2.99, "y": -1.1}, {"x": 2.99, "y": -2.48}, {"x": 3.73, "y": -2.48}, {"x": 3.73, "y": -1.1}, {"x": 2.99, "y": -1.1}], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 1.06}, {"roomarea": [{"x": 2.41, "y": -1.1}, {"x": 2.41, "y": -1.85}, {"x": 2.88, "y": -1.85}, {"x": 2.88, "y": -1.1}, {"x": 2.41, "y": -1.1}], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.37}, {"roomarea": [{"x": 3.51, "y": -3.37}, {"x": 3.51, "y": -3.84}, {"x": 3.8, "y": -3.84}, {"x": 3.8, "y": -4.28}, {"x": 4.13, "y": -4.28}, {"x": 4.13, "y": -4.58}, {"x": 5.79, "y": -4.58}, {"x": 5.79, "y": -3.67}, {"x": 5.48, "y": -3.67}, {"x": 5.48, "y": -3.37}, {"x": 3.51, "y": -3.37}], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 2.38}, {"roomarea": [{"x": 5.78, "y": -0.27}, {"x": 5.73, "y": -0.27}, {"x": 5.67, "y": -0.27}, {"x": 5.67, "y": -0.32}, {"x": 5.61, "y": -0.32}, {"x": 5.56, "y": -0.32}, {"x": 5.51, "y": -0.37}, {"x": 5.46, "y": -0.37}, {"x": 5.41, "y": -0.37}, {"x": 5.41, "y": -0.42}, {"x": 5.35, "y": -0.42}, {"x": 5.3, "y": -0.42}, {"x": 5.24, "y": -0.42}, {"x": 5.24, "y": -0.47}, {"x": 5.18, "y": -0.47}, {"x": 5.13, "y": -0.47}, {"x": 5.13, "y": -0.52}, {"x": 5.07, "y": -0.52}, {"x": 5.02, "y": -0.52}, {"x": 4.96, "y": -0.52}, {"x": 4.96, "y": -0.57}, {"x": 4.9, "y": -0.57}, {"x": 4.84, "y": -0.57}, {"x": 4.84, "y": -0.62}, {"x": 4.79, "y": -0.62}, {"x": 4.73, "y": -0.62}, {"x": 4.67, "y": -0.62}, {"x": 4.67, "y": -0.67}, {"x": 4.62, "y": -0.67}, {"x": 4.56, "y": -0.67}, {"x": 4.56, "y": -0.72}, {"x": 4.5, "y": -0.72}, {"x": 4.44, "y": -0.72}, {"x": 4.39, "y": -0.72}, {"x": 4.39, "y": -0.77}, {"x": 4.33, "y": -0.77}, {"x": 4.28, "y": -0.77}, {"x": 4.28, "y": -0.82}, {"x": 4.22, "y": -0.82}, {"x": 4.16, "y": -0.82}, {"x": 4.1, "y": -0.82}, {"x": 4.1, "y": -0.87}, {"x": 4.05, "y": -0.87}, {"x": 3.99, "y": -0.87}, {"x": 3.99, "y": -0.92}, {"x": 3.94, "y": -0.92}, {"x": 3.89, "y": -0.92}, {"x": 3.89, "y": -1.5}, {"x": 3.83, "y": -1.5}, {"x": 3.83, "y": -2.57}, {"x": 3.51, "y": -2.57}, {"x": 3.51, "y": -3.19}, {"x": 5.78, "y": -3.19}, {"x": 5.78, "y": -0.27}], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 5.3}, {"roomarea": [{"x": 0.18, "y": -3.45}, {"x": 0.18, "y": -4.58}, {"x": 2.31, "y": -4.58}, {"x": 2.31, "y": -3.45}, {"x": 0.18, "y": -3.45}], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 2.45}, {"roomarea": [{"x": 1.91, "y": -1.25}, {"x": 1.86, "y": -1.25}, {"x": 1.8, "y": -1.25}, {"x": 1.8, "y": -1.3}, {"x": 1.75, "y": -1.3}, {"x": 1.7, "y": -1.3}, {"x": 1.65, "y": -1.35}, {"x": 1.6, "y": -1.35}, {"x": 1.54, "y": -1.35}, {"x": 1.54, "y": -1.4}, {"x": 1.49, "y": -1.4}, {"x": 1.43, "y": -1.4}, {"x": 1.38, "y": -1.4}, {"x": 1.38, "y": -1.45}, {"x": 1.33, "y": -1.45}, {"x": 1.28, "y": -1.45}, {"x": 1.23, "y": -1.45}, {"x": 1.23, "y": -1.5}, {"x": 1.17, "y": -1.5}, {"x": 1.12, "y": -1.5}, {"x": 1.12, "y": -1.55}, {"x": 1.06, "y": -1.55}, {"x": 1.0, "y": -1.55}, {"x": 0.95, "y": -1.55}, {"x": 0.95, "y": -1.6}, {"x": 0.89, "y": -1.6}, {"x": 0.83, "y": -1.6}, {"x": 0.83, "y": -1.65}, {"x": 0.78, "y": -1.65}, {"x": 0.72, "y": -1.65}, {"x": 0.66, "y": -1.65}, {"x": 0.66, "y": -1.7}, {"x": 0.61, "y": -1.7}, {"x": 0.55, "y": -1.7}, {"x": 0.55, "y": -1.75}, {"x": 0.49, "y": -1.75}, {"x": 0.43, "y": -1.75}, {"x": 0.38, "y": -1.75}, {"x": 0.38, "y": -1.8}, {"x": 0.33, "y": -1.8}, {"x": 0.33, "y": -2.54}, {"x": 0.18, "y": -2.54}, {"x": 0.18, "y": -3.35}, {"x": 2.31, "y": -3.35}, {"x": 2.31, "y": -2.72}, {"x": 1.91, "y": -2.72}, {"x": 1.91, "y": -1.25}], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 3.31}, {"roomarea": [{"x": 2.41, "y": -1.95}, {"x": 2.41, "y": -2.89}, {"x": 2.41, "y": -3.32}, {"x": 2.41, "y": -3.46}, {"x": 2.41, "y": -3.89}, {"x": 2.74, "y": -3.89}, {"x": 2.74, "y": -4.58}, {"x": 3.4, "y": -4.58}, {"x": 3.4, "y": -2.59}, {"x": 2.89, "y": -2.59}, {"x": 2.89, "y": -1.95}, {"x": 2.41, "y": -1.95}], "roomname": "\u8d70\u5eca", "roomid": "0", "roommeasure": 2.09}], "outlinewalls": [{"x1": 5.94, "y1": -4.74, "x2": 3.34, "y2": -4.74}, {"x1": 3.34, "y1": -4.74, "x2": 2.8, "y2": -4.74}, {"x1": 2.8, "y1": -4.74, "x2": 0.0, "y2": -4.74}, {"x1": 0.0, "y1": -4.74, "x2": 0.0, "y2": -1.73}, {"x1": 0.0, "y1": -1.73, "x2": 2.28, "y2": -0.93}, {"x1": 2.28, "y1": -0.93, "x2": 3.4, "y2": -0.93}, {"x1": 3.4, "y1": -0.93, "x2": 5.94, "y2": -0.03}, {"x1": 5.94, "y1": -0.03, "x2": 5.94, "y2": -4.74}], "doors": [], "windows": [{"x": 3.07, "y": -4.67, "width": 0.5, "height": 0.16, "rot": 0}, {"x": 3.97, "y": -4.29, "width": 0.22, "height": 0.05, "rot": 0}, {"x": 2.33, "y": -4.28, "width": 0.05, "height": 0.53, "rot": 0}, {"x": 3.42, "y": -4.25, "width": 0.05, "height": 0.59, "rot": 0}, {"x": 0.07, "y": -3.96, "width": 0.15, "height": 0.48, "rot": 0}, {"x": 5.89, "y": -4.09, "width": 0.16, "height": 0.86, "rot": 0}, {"x": 2.36, "y": -3.67, "width": 0.07, "height": 0.4, "rot": 0}, {"x": 3.45, "y": -3.61, "width": 0.07, "height": 0.39, "rot": 0}, {"x": 2.36, "y": -3.1, "width": 0.07, "height": 0.4, "rot": 0}, {"x": 3.45, "y": -2.8, "width": 0.07, "height": 0.4, "rot": 0}, {"x": 0.07, "y": -2.92, "width": 0.15, "height": 0.75, "rot": 0}, {"x": 2.38, "y": -2.4, "width": 0.05, "height": 0.37, "rot": 0}, {"x": 2.93, "y": -2.28, "width": 0.07, "height": 0.34, "rot": 0}, {"x": 2.67, "y": -1.9, "width": 0.31, "height": 0.08, "rot": 0}, {"x": 1.95, "y": -1.91, "width": 0.05, "height": 0.31, "rot": 0}, {"x": 1.95, "y": -1.46, "width": 0.05, "height": 0.39, "rot": 0}, {"x": 5.89, "y": -2.03, "width": 0.15, "height": 2.03, "rot": 0}]}]}'
+
+        // //////
+
+        // var jsonobject3 =' {"meta": { }, "data": [{ "type": "roomsdata", "rooms": [{ "roomarea": [{ "x": 3.7, "y": -7.13 }, { "x": 3.7, "y": -7.93 }, { "x": 4.38, "y": -7.93 }, { "x": 4.38, "y": -7.13 }, { "x": 3.7, "y": -7.13 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.57 }, { "roomarea": [{ "x": 3.7, "y": -6.27 }, { "x": 3.7, "y": -7.03 }, { "x": 4.38, "y": -7.03 }, { "x": 4.38, "y": -6.27 }, { "x": 3.7, "y": -6.27 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.54 }, { "roomarea": [{ "x": 4.47, "y": -0.8 }, { "x": 4.47, "y": -2.45 }, { "x": 5.21, "y": -2.45 }, { "x": 5.21, "y": -0.8 }, { "x": 4.47, "y": -0.8 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 1.26 }, { "roomarea": [{ "x": 6.15, "y": -2.88 }, { "x": 6.15, "y": -4.08 }, { "x": 6.88, "y": -4.08 }, { "x": 6.88, "y": -2.88 }, { "x": 6.15, "y": -2.88 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.91 }, { "roomarea": [{ "x": 5.32, "y": -2.05 }, { "x": 5.32, "y": -2.54 }, { "x": 4.47, "y": -2.54 }, { "x": 4.47, "y": -3.24 }, { "x": 5.32, "y": -3.24 }, { "x": 5.32, "y": -4.08 }, { "x": 6.04, "y": -4.08 }, { "x": 6.04, "y": -2.81 }, { "x": 6.88, "y": -2.81 }, { "x": 6.88, "y": -2.05 }, { "x": 5.32, "y": -2.05 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 2.73 }, { "roomarea": [{ "x": 5.32, "y": -0.8 }, { "x": 5.32, "y": -1.95 }, { "x": 6.88, "y": -1.95 }, { "x": 6.88, "y": -0.8 }, { "x": 5.32, "y": -0.8 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 1.83 }, { "roomarea": [{ "x": 1.24, "y": -3.34 }, { "x": 1.24, "y": -7.93 }, { "x": 3.59, "y": -7.93 }, { "x": 3.59, "y": -6.2 }, { "x": 6.88, "y": -6.2 }, { "x": 6.88, "y": -4.19 }, { "x": 5.22, "y": -4.19 }, { "x": 5.22, "y": -3.34 }, { "x": 1.24, "y": -3.34 }], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 18.84 }, { "roomarea": [{ "x": 4.49, "y": -6.27 }, { "x": 4.49, "y": -8.73 }, { "x": 6.88, "y": -8.73 }, { "x": 6.88, "y": -6.27 }, { "x": 4.49, "y": -6.27 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 5.95 }, { "roomarea": [{ "x": 1.24, "y": -0.8 }, { "x": 1.24, "y": -3.24 }, { "x": 4.36, "y": -3.24 }, { "x": 4.36, "y": -0.8 }, { "x": 1.24, "y": -0.8 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 7.69 }, { "roomarea": [{ "x": 7.87, "y": -4.23 }, { "x": 7.87, "y": -6.76 }, { "x": 7.87, "y": -6.81 }, { "x": 7.99, "y": -6.9 }, { "x": 8.09, "y": -6.99 }, { "x": 8.19, "y": -7.08 }, { "x": 8.24, "y": -7.08 }, { "x": 8.24, "y": -8.17 }, { "x": 9.43, "y": -8.17 }, { "x": 9.43, "y": -4.23 }, { "x": 7.87, "y": -4.23 }], "roomname": "\u8d70\u5eca", "roomid": "0", "roommeasure": 5.76 }, { "roomarea": [{ "x": 1.22, "y": -8.03 }, { "x": 1.22, "y": -8.72 }, { "x": 1.51, "y": -8.72 }, { "x": 1.51, "y": -8.79 }, { "x": 1.51, "y": -8.84 }, { "x": 1.56, "y": -8.84 }, { "x": 1.56, "y": -8.89 }, { "x": 1.56, "y": -8.94 }, { "x": 1.61, "y": -8.99 }, { "x": 1.61, "y": -9.04 }, { "x": 1.61, "y": -9.09 }, { "x": 1.66, "y": -9.09 }, { "x": 1.66, "y": -9.14 }, { "x": 1.66, "y": -9.19 }, { "x": 1.71, "y": -9.24 }, { "x": 1.71, "y": -9.29 }, { "x": 2.92, "y": -9.29 }, { "x": 2.92, "y": -9.24 }, { "x": 2.92, "y": -9.19 }, { "x": 2.97, "y": -9.19 }, { "x": 2.97, "y": -9.14 }, { "x": 2.97, "y": -9.09 }, { "x": 3.02, "y": -9.04 }, { "x": 3.02, "y": -8.99 }, { "x": 3.02, "y": -8.94 }, { "x": 3.07, "y": -8.94 }, { "x": 3.07, "y": -8.89 }, { "x": 3.07, "y": -8.84 }, { "x": 3.12, "y": -8.84 }, { "x": 3.12, "y": -8.79 }, { "x": 3.12, "y": -8.72 }, { "x": 3.17, "y": -8.72 }, { "x": 4.38, "y": -8.72 }, { "x": 4.38, "y": -8.03 }, { "x": 1.22, "y": -8.03 }], "roomname": "\u9633\u53f0", "roomid": "0", "roommeasure": 3.03 }], "outlinewalls": [], "doors": [], "windows": [] }] }';
+        // var jsonobject4 =' {"meta": { }, "data": [{ "type": "roomsdata", "rooms": [{ "roomarea": [{ "x": 1.81, "y": -3.66 }, { "x": 1.81, "y": -4.5 }, { "x": 2.15, "y": -4.5 }, { "x": 2.15, "y": -3.66 }, { "x": 1.81, "y": -3.66 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.31 }, { "roomarea": [{ "x": 1.81, "y": -3.21 }, { "x": 1.81, "y": -3.56 }, { "x": 2.15, "y": -3.56 }, { "x": 2.15, "y": -3.21 }, { "x": 1.81, "y": -3.21 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.13 }, { "roomarea": [{ "x": 1.82, "y": -0.53 }, { "x": 1.82, "y": -1.16 }, { "x": 2.18, "y": -1.16 }, { "x": 2.18, "y": -0.53 }, { "x": 1.82, "y": -0.53 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.24 }, { "roomarea": [{ "x": 0.52, "y": -1.26 }, { "x": 0.52, "y": -1.58 }, { "x": 2.18, "y": -1.58 }, { "x": 2.18, "y": -1.26 }, { "x": 0.52, "y": -1.26 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.55 }, { "roomarea": [{ "x": 1.33, "y": -0.53 }, { "x": 1.33, "y": -1.16 }, { "x": 1.71, "y": -1.16 }, { "x": 1.71, "y": -0.53 }, { "x": 1.33, "y": -0.53 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.26 }, { "roomarea": [{ "x": 0.52, "y": -0.53 }, { "x": 0.52, "y": -1.16 }, { "x": 1.22, "y": -1.16 }, { "x": 1.22, "y": -0.53 }, { "x": 0.52, "y": -0.53 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.46 }, { "roomarea": [{ "x": 0.52, "y": -1.68 }, { "x": 0.52, "y": -4.19 }, { "x": 1.7, "y": -4.19 }, { "x": 1.7, "y": -3.14 }, { "x": 2.15, "y": -3.14 }, { "x": 2.15, "y": -2.68 }, { "x": 3.49, "y": -2.68 }, { "x": 3.49, "y": -1.68 }, { "x": 0.52, "y": -1.68 }], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 4.99 }, { "roomarea": [{ "x": 2.26, "y": -2.75 }, { "x": 2.26, "y": -4.5 }, { "x": 3.49, "y": -4.5 }, { "x": 3.49, "y": -2.75 }, { "x": 2.26, "y": -2.75 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 2.2 }, { "roomarea": [{ "x": 2.29, "y": -0.37 }, { "x": 2.29, "y": -1.58 }, { "x": 3.49, "y": -1.58 }, { "x": 3.49, "y": -0.37 }, { "x": 2.29, "y": -0.37 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 1.49 }, { "roomarea": [{ "x": 4.15, "y": -0.65 }, { "x": 4.15, "y": -1.28 }, { "x": 4.08, "y": -1.28 }, { "x": 4.08, "y": -1.33 }, { "x": 3.94, "y": -1.43 }, { "x": 3.94, "y": -2.63 }, { "x": 4.67, "y": -2.63 }, { "x": 4.67, "y": -0.65 }, { "x": 4.15, "y": -0.65 }], "roomname": "\u8d70\u5eca", "roomid": "0", "roommeasure": 1.33 }, { "roomarea": [{ "x": 0.5, "y": -4.29 }, { "x": 0.5, "y": -4.67 }, { "x": 0.64, "y": -4.67 }, { "x": 0.64, "y": -4.73 }, { "x": 0.64, "y": -4.78 }, { "x": 0.7, "y": -4.78 }, { "x": 0.7, "y": -4.83 }, { "x": 1.45, "y": -4.83 }, { "x": 1.45, "y": -4.78 }, { "x": 1.5, "y": -4.78 }, { "x": 1.5, "y": -4.73 }, { "x": 1.5, "y": -4.67 }, { "x": 1.55, "y": -4.67 }, { "x": 1.68, "y": -4.67 }, { "x": 1.68, "y": -4.53 }, { "x": 1.68, "y": -4.29 }, { "x": 0.5, "y": -4.29 }], "roomname": "\u9633\u53f0", "roomid": "0", "roommeasure": 0.63 }], "outlinewalls": [], "doors": [], "windows": [] }] }'
+
+        // var jsonobject5=' {"meta": { }, "data": [{ "type": "roomsdata", "rooms": [{ "roomarea": [{ "x": 2.26, "y": -1.14 }, { "x": 2.26, "y": -2.25 }, { "x": 2.76, "y": -2.25 }, { "x": 2.76, "y": -1.14 }, { "x": 2.26, "y": -1.14 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.58 }, { "roomarea": [{ "x": 3.36, "y": -0.17 }, { "x": 3.36, "y": -0.55 }, { "x": 3.62, "y": -0.55 }, { "x": 3.62, "y": -0.17 }, { "x": 3.36, "y": -0.17 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.11 }, { "roomarea": [{ "x": 3.73, "y": -1.23 }, { "x": 3.73, "y": -1.9 }, { "x": 4.72, "y": -1.9 }, { "x": 4.72, "y": -1.23 }, { "x": 3.73, "y": -1.23 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.69 }, { "roomarea": [{ "x": 3.73, "y": -0.17 }, { "x": 3.73, "y": -1.13 }, { "x": 4.72, "y": -1.13 }, { "x": 4.72, "y": -0.17 }, { "x": 3.73, "y": -0.17 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.98 }, { "roomarea": [{ "x": 2.26, "y": -2.35 }, { "x": 2.26, "y": -4.2 }, { "x": 2.76, "y": -4.2 }, { "x": 2.76, "y": -2.35 }, { "x": 2.26, "y": -2.35 }], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 0.97 }, { "roomarea": [{ "x": 3.36, "y": -0.17 }, { "x": 3.36, "y": -0.55 }, { "x": 3.62, "y": -0.55 }, { "x": 3.62, "y": -0.17 }, { "x": 3.36, "y": -0.17 }], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 0.11 }, { "roomarea": [{ "x": 2.87, "y": -1.39 }, { "x": 2.87, "y": -4.29 }, { "x": 2.26, "y": -4.29 }, { "x": 2.26, "y": -4.95 }, { "x": 4.72, "y": -4.95 }, { "x": 4.72, "y": -2.01 }, { "x": 3.63, "y": -2.01 }, { "x": 3.63, "y": -1.39 }, { "x": 2.87, "y": -1.39 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 6.41 }, { "roomarea": [{ "x": 3.36, "y": -0.17 }, { "x": 3.36, "y": -0.55 }, { "x": 3.62, "y": -0.55 }, { "x": 3.62, "y": -0.17 }, { "x": 3.36, "y": -0.17 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 0.11 }, { "roomarea": [{ "x": 1.77, "y": -0.17 }, { "x": 1.77, "y": -0.91 }, { "x": 2.23, "y": -0.91 }, { "x": 2.23, "y": -1.04 }, { "x": 2.84, "y": -1.04 }, { "x": 2.84, "y": -1.29 }, { "x": 3.62, "y": -1.29 }, { "x": 3.62, "y": -0.66 }, { "x": 3.26, "y": -0.66 }, { "x": 3.26, "y": -0.17 }, { "x": 1.77, "y": -0.17 }], "roomname": "\u8d70\u5eca", "roomid": "0", "roommeasure": 1.6 }, { "roomarea": [{ "x": 2.26, "y": -5.05 }, { "x": 2.26, "y": -5.69 }, { "x": 4.17, "y": -5.69 }, { "x": 4.22, "y": -5.69 }, { "x": 4.22, "y": -5.64 }, { "x": 4.28, "y": -5.64 }, { "x": 4.34, "y": -5.58 }, { "x": 4.4, "y": -5.58 }, { "x": 4.4, "y": -5.52 }, { "x": 4.46, "y": -5.52 }, { "x": 4.52, "y": -5.46 }, { "x": 4.58, "y": -5.46 }, { "x": 4.58, "y": -5.4 }, { "x": 4.64, "y": -5.4 }, { "x": 4.7, "y": -5.34 }, { "x": 4.7, "y": -5.05 }, { "x": 2.26, "y": -5.05 }], "roomname": "\u9633\u53f0", "roomid": "0", "roommeasure": 1.51 }, { "roomarea": [{ "x": 3.36, "y": -0.17 }, { "x": 3.36, "y": -0.55 }, { "x": 3.62, "y": -0.55 }, { "x": 3.62, "y": -0.17 }, { "x": 3.36, "y": -0.17 }], "roomname": "\u9633\u53f0", "roomid": "0", "roommeasure": 0.11 }], "outlinewalls": [], "doors": [], "windows": [] }] }'
+        // var jsonobject6=' {"meta": { }, "data": [{ "type": "roomsdata", "rooms": [{ "roomarea": [{ "x": 2.22, "y": -3.33 }, { "x": 2.22, "y": -3.65 }, { "x": 2.48, "y": -3.65 }, { "x": 2.48, "y": -3.33 }, { "x": 2.22, "y": -3.33 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.09 }, { "roomarea": [{ "x": 2.25, "y": -0.26 }, { "x": 2.25, "y": -1.25 }, { "x": 2.49, "y": -1.25 }, { "x": 2.49, "y": -0.26 }, { "x": 2.25, "y": -0.26 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.26 }, { "roomarea": [{ "x": 2.22, "y": -2.54 }, { "x": 2.22, "y": -3.04 }, { "x": 2.48, "y": -3.04 }, { "x": 2.48, "y": -2.54 }, { "x": 2.22, "y": -2.54 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.14 }, { "roomarea": [{ "x": 1.47, "y": -0.74 }, { "x": 1.47, "y": -1.25 }, { "x": 2.14, "y": -1.25 }, { "x": 2.14, "y": -0.74 }, { "x": 1.47, "y": -0.74 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.36 }, { "roomarea": [{ "x": 1.47, "y": -0.11 }, { "x": 1.47, "y": -0.64 }, { "x": 2.14, "y": -0.64 }, { "x": 2.14, "y": -0.11 }, { "x": 1.47, "y": -0.11 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.37 }, { "roomarea": [{ "x": 0.66, "y": -0.11 }, { "x": 0.66, "y": -2.44 }, { "x": 2.86, "y": -2.44 }, { "x": 2.86, "y": -1.77 }, { "x": 2.5, "y": -1.77 }, { "x": 2.5, "y": -1.36 }, { "x": 1.37, "y": -1.36 }, { "x": 1.37, "y": -0.11 }, { "x": 0.66, "y": -0.11 }], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 3.18 }, { "roomarea": [{ "x": 0.66, "y": -2.54 }, { "x": 0.66, "y": -3.65 }, { "x": 2.11, "y": -3.65 }, { "x": 2.11, "y": -2.54 }, { "x": 0.66, "y": -2.54 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 1.65 }, { "roomarea": [{ "x": 2.6, "y": -0.11 }, { "x": 2.6, "y": -1.66 }, { "x": 3.64, "y": -1.66 }, { "x": 3.64, "y": -0.11 }, { "x": 2.6, "y": -0.11 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 1.65 }, { "roomarea": [{ "x": 2.59, "y": -2.54 }, { "x": 2.59, "y": -3.51 }, { "x": 3.06, "y": -3.51 }, { "x": 3.06, "y": -3.16 }, { "x": 3.06, "y": -3.11 }, { "x": 2.99, "y": -3.11 }, { "x": 2.99, "y": -3.04 }, { "x": 2.92, "y": -2.99 }, { "x": 2.87, "y": -2.99 }, { "x": 2.87, "y": -2.94 }, { "x": 2.87, "y": -2.54 }, { "x": 2.59, "y": -2.54 }], "roomname": "\u8d70\u5eca", "roomid": "0", "roommeasure": 0.38 }, { "roomarea": [{ "x": 0.64, "y": -3.75 }, { "x": 0.64, "y": -4.03 }, { "x": 2.11, "y": -4.03 }, { "x": 2.11, "y": -3.75 }, { "x": 0.64, "y": -3.75 }], "roomname": "\u9633\u53f0", "roomid": "0", "roommeasure": 0.43 }], "outlinewalls": [], "doors": [], "windows": [] }] }'
+        // var jsonobject7=' {"meta": { }, "data": [{ "type": "roomsdata", "rooms": [{ "roomarea": [{ "x": 3.03, "y": -0.21 }, { "x": 3.03, "y": -0.77 }, { "x": 3.3, "y": -0.77 }, { "x": 3.3, "y": -0.21 }, { "x": 3.03, "y": -0.21 }], "roomname": "\u58c1\u6a71", "roomid": "0", "roommeasure": 0.17 }, { "roomarea": [{ "x": 1.36, "y": -1.57 }, { "x": 1.36, "y": -2.01 }, { "x": 1.27, "y": -2.01 }, { "x": 1.27, "y": -2.38 }, { "x": 1.36, "y": -2.38 }, { "x": 1.36, "y": -2.6 }, { "x": 1.8, "y": -2.6 }, { "x": 1.8, "y": -1.57 }, { "x": 1.36, "y": -1.57 }], "roomname": "\u6d74\u5ba4", "roomid": "0", "roommeasure": 0.52 }, { "roomarea": [{ "x": 1.27, "y": -2.66 }, { "x": 1.27, "y": -4.33 }, { "x": 3.41, "y": -4.33 }, { "x": 3.41, "y": -3.19 }, { "x": 3.27, "y": -3.19 }, { "x": 3.27, "y": -2.98 }, { "x": 1.81, "y": -2.98 }, { "x": 1.81, "y": -2.66 }, { "x": 1.27, "y": -2.66 }], "roomname": "\u53a8\u623f", "roomid": "0", "roommeasure": 3.1 }, { "roomarea": [{ "x": 1.41, "y": -0.21 }, { "x": 1.41, "y": -1.39 }, { "x": 1.27, "y": -1.39 }, { "x": 1.27, "y": -1.51 }, { "x": 1.84, "y": -1.51 }, { "x": 1.84, "y": -1.71 }, { "x": 2.27, "y": -1.71 }, { "x": 2.27, "y": -1.22 }, { "x": 2.34, "y": -1.16 }, { "x": 2.39, "y": -1.16 }, { "x": 2.39, "y": -1.1 }, { "x": 2.46, "y": -1.1 }, { "x": 2.51, "y": -1.03 }, { "x": 2.59, "y": -0.97 }, { "x": 2.64, "y": -0.97 }, { "x": 2.64, "y": -0.91 }, { "x": 2.71, "y": -0.91 }, { "x": 2.71, "y": -0.85 }, { "x": 2.76, "y": -0.85 }, { "x": 2.81, "y": -0.85 }, { "x": 2.81, "y": -0.78 }, { "x": 2.98, "y": -0.78 }, { "x": 2.98, "y": -0.21 }, { "x": 1.41, "y": -0.21 }], "roomname": "\u5367\u5ba4", "roomid": "0", "roommeasure": 1.78 }, { "roomarea": [{ "x": 1.87, "y": -1.77 }, { "x": 1.87, "y": -2.91 }, { "x": 2.27, "y": -2.91 }, { "x": 2.27, "y": -1.77 }, { "x": 1.87, "y": -1.77 }], "roomname": "\u8d70\u5eca", "roomid": "0", "roommeasure": 0.48 }], "outlinewalls": [], "doors": [], "windows": [] }] }'
+
+        // var object = JSON.parse(jsonobject7);
+        // object = object.data[0].rooms
+
+        // var newobject = []
+
+
+        // object.forEach(function (area) {
+        //     area = area.roomarea
+        //     if (utilCheckLineSequence(area[0], area[1], "Clockwise", area)) {
+        //         area = area.reverse();
+        //     }
+
+        //     let aread = {}
+        //     let objectlist = []
+        //     for (let i = 0; i < area.length - 1; i++) {
+        //         let dataobject = {}
+        //         dataobject.begin = area[i]
+        //         dataobject.begin.z = 0
+        //         dataobject.end = area[i + 1]
+        //         dataobject.end.z = 0
+        //         objectlist.push(dataobject)
+
+        //     }
+        //     aread.segdata = objectlist
+        //     area = utilMathmegraLineLoop(aread.segdata);
+        //     area.push(area[0])
+        //     aread = {}
+        //     objectlist = []
+        //     for (let i = 0; i < area.length - 1; i++) {
+        //         let dataobject = {}
+        //         dataobject.begin = area[i]
+        //         dataobject.begin.z = 0
+        //         dataobject.end = area[i + 1]
+        //         dataobject.end.z = 0
+        //         dataobject.length = utilMathLineLength(dataobject.begin, dataobject.end)
+        //         dataobject.middle_point = utilGetLineMiddlePoint(dataobject.begin, dataobject.end)
+
+        //         let zdir = new THREE.Vector3(0, 0, 1)
+        //         let dirA = new THREE.Vector3();
+        //         dirA.subVectors(dataobject.end, dataobject.begin);
+        //         let dirANom = new THREE.Vector3();
+        //         dirA.normalize();
+        //         dirANom.crossVectors(dirA, zdir);
+        //         dataobject.nomral = dirANom
+        //         objectlist.push(dataobject)
+
+        //         dataobject.raypoint = utilVector3AddLenthArray([dataobject.middle_point], dataobject.nomral, 0.00001)
+        //         dataobject.raypoint = dataobject.raypoint[0]
+
+
+        //         let mesh = new THREE.Mesh()
+        //         mesh.material = material3.clone()
+
+
+        //         mesh.material.color = new THREE.Color("rgb(255, 0, 0)");
+        //         if (i == 0) {
+        //             mesh.material.color = new THREE.Color("rgb(255, 0, 255)");
+        //         }
+        //         mesh.geometry = new THREE.BoxGeometry(0.01, 0.01, 0.01);
+
+        //         mesh.position.x = dataobject.raypoint.x;
+        //         mesh.position.y = dataobject.raypoint.y;
+        //         mesh.position.z = 0.15
+        //         scene.add(mesh);
+        //     }
+
+        //     aread.segdata = objectlist
+
+        //     var middleseglist = utilMathmiddleseg(aread.segdata)
+
+        //     var attlooplist = []
+        //     for (let i = 0; i < middleseglist.length; i++) {
+        //         let loop = buildAttLoop(middleseglist[i], 0.03)
+        //         attlooplist.push(loop)
+        //         var shape = new THREE.Shape(loop);
+        //         shape = shape.makeGeometry()
+
+        //         let mesh = new THREE.Mesh()
+        //         mesh.material = material3.clone()
+        //         mesh.material.wireframe = true
+        //         mesh.material.color = new THREE.Color("rgb(255, 0, 0)");
+        //         mesh.geometry = shape
+        //         mesh.visible = true
+
+        //         mesh.position.z = 0.15
+        //         mesh.castShadow = false
+
+        //         scene.add(mesh);
+        //     }
+
+        //     //开始过滤锯齿
+
+        //     aread.profile = area
+        //     newobject.push(aread)
+
+        //     var shape = new THREE.Shape(aread.profile);
+        //     shape = shape.makeGeometry()
+
+        //     let mesh = new THREE.Mesh()
+        //     mesh.material = material3.clone()
+        //     mesh.material.wireframe = true
+        //     mesh.material.color = new THREE.Color("rgb(0, 255, 0)");
+        //     mesh.geometry = shape
+        //     mesh.visible = true
+
+        //     mesh.position.z = 0.1
+        //     mesh.castShadow = false
+        //     scene.add(mesh);
+
+        //     if(attlooplist.length>0){
+        //         var newprofile=  DelATloopPoint (attlooplist,aread.segdata)
+        //         shape = new THREE.Shape(newprofile);
+        //         shape = shape.makeGeometry()
+
+        //         let mesh2 = mesh.clone()
+        //         mesh2.material=   mesh.material.clone()
+        //         mesh2.material.color = new THREE.Color("rgb(255, 0, 255)");
+        //         mesh2.geometry = shape
+        //         mesh2.castShadow = false
+
+        //         mesh2.position.z = 1
+        //         scene.add(mesh2);
+        //     }
+
+
+        // })
+
+
+        //   var plane = new THREE.PlaneBufferGeometry( 2, 2 );
+        // var  fire23 = new THREE.Fire( plane, {
+        //       textureWidth: 512,
+        //       textureHeight: 512,
+        //       debug: false
+        //   } );
+        //   fire23.position.z = - 2;
+        //   scene.add( fire23 );
+        //
+        //
+        //   var plane2 = new THREE.PlaneBufferGeometry( 2, 2 );
+        //   var  fire2 = new THREE.Fire( plane2, {
+        //       textureWidth: 512,
+        //       textureHeight: 512,
+        //       debug: false
+        //   } );
+        //   fire2.position.z = - 2;
+        //   fire2.position.x = 2;
+        //   scene.add( fire2 );
+        //
+        //
+        //
+        //   fire2.clearSources();
+        //   fire2.addSource( 0.5, 0.1, 0.1, 1.0, 0.0, 1.0 );
+        //
+        //   fire23.clearSources();
+        //   fire23.addSource( 0.5, 0.1, 0.1, 1.0, 0.0, 1.0 );
+        //
+        //
+        //
+        //   fire2.color1.set( "#ffa000" );
+        //   fire2.airSpeed=50;
+        //
+        //   fire23.color1.set( "#fa0000" );
+        //   fire23.airSpeed=1;
+
+
+        renderer = new THREE.WebGLRenderer({antialias: true});
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        container.appendChild(renderer.domElement);
+
+        renderer.outputEncoding = THREE.sRGBEncoding;
+
+        renderer.shadowMap.enabled = true;
+
+        // renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+
+        // controls
+        var controls = new OrbitControls(camera, renderer.domElement);
+        controls.maxPolarAngle = Math.PI * 0.5;
+        controls.minDistance = 1;
+        controls.maxDistance = 50000;
+        controls.target.x=11
+        controls.target.y=-4
+        controls.target.z=0
+        // performance monitor
+
+        stats = new Stats();
+        container.appendChild(stats.dom);
+
+
+        window.addEventListener('resize', onWindowResize, false);
+
+        //
+
+        var gui = new GUI();
+        // gui.add(params, 'enableWind');
+        // gui.add(params, 'showBall');
+        // gui.add(params, 'tooglePins');
+        //gui.add(params, 'c').step(5); // 增长的步长
+        gui.add(text, 'long', 0.01, 20).name('楼梯主体长度'); // 最大、最小值
+        gui.add(text, 'width', 0.01, 5).name('楼梯主体宽度');
+        ; // 最大、最小值
+        gui.add(text, 'height', 0.01, 5).name('楼梯主体高度');
+        ; // 最大、最小值
+        gui.add(text, 'stairnum', 1, 30).name('楼梯主体级数');
+        ; // 最大、最小值
+        gui.add(text, 'stairangle', -1, 1).name('楼梯级前后移距离'); // 最大、最小值
+        gui.add(text, 'endtop', 0, 5).name('楼梯主体尾部高度'); // 最大、最小值
+        gui.add(text, 'begintop', 0, 20).name('楼梯主体头部底面长度');
+        ; // 最大、最小值
+        gui.add(text, 'moveposition', -5, 5).name('楼梯主体位移'); // 最大、最小值
+
+        gui.add(options, 'miansta').name('显示楼梯主体');
+
+        gui.add(options, 'wireframe').name('显示线框');
+        ;
+
+        setTimeout( function(){
+            text.long=0.001
+            text.height=0.001
+            text.stairnum=1
+            camera.lookAt(11, -4, 0)
+
+            var interval =  setInterval(function(){
+                if(text.long>8){
+                    if(text.height>3.3){
+
+                        if(text.stairnum>12){
+                            text.platformRot=text.platformRot+2
+                            if(text.platformRot>89){
+                                window.clearInterval(interval);
+                            }
+
+                        }else{
+                            text.stairnum=text.stairnum+0.2
+                        }
+                    }else{
+                        text.height=text.height+0.05
+                    }
+                }else{
+                    text.long=text.long+0.1
+                }
+            },50)
+
+
+        }, 1 * 1000 );//延迟5000毫秒
+        // setTimeout(doso(text,8.001),"2000");
+        //
+        //  setTimeout(doso(text,15.001),"5000");
+        // function doso(text,num){
+        //     text.long=num
+        // }
+
+
+        gui.add(text, 'Boardheight', 0.01, 0.5).name('楼梯板高度'); // 最大、最小值
+        gui.add(text, 'Boardlength', 0.01, 0.5).name('楼梯板延长'); // 最大、最小值
+        gui.add(text, 'Boardwidth', 0.01, 5).name('楼梯板宽度'); // 最大、最小值
+        gui.add(options, 'BuildPlaneSide').name('显示侧板');
+        gui.add(text, 'SidepanelHeight', 0, 1).name('侧板高度'); // 最大、最小值
+        gui.add(text, 'SidepanelWidth', 0.001, 0.5).name('侧板宽度'); // 最大、最小值
+        gui.add(text, 'SidepanelBegintop', 0, 10).name('显示头部起始距离'); // 最大、最小值
+        gui.add(text, 'SidepanelEndtop', 0, 10).name('显示侧板尾部起始距离'); // 最大、最小值
+        gui.add(text, 'SidepanelZposition', -5, 5).name('侧板上面位移'); // 最大、最小值
+        gui.add(options, 'Handrail').name('显示扶手');
+
+        gui.add(text, 'HandrailZposition', 0, 5).name('扶手上下位移');
+        ; // 最大、最小值
+        gui.add(text, 'HandrailWidth', -0.2, 0.2).name('扶手路径内外扩');
+        ; // 最大、最小值
+        gui.add(text, 'HandrailhandlX', 0.05, 1).name('显示交接位高度');
+        ; // 最大、最小值
+
+        gui.add(options, 'platform').name('显示平台');//平台
+        gui.add(text, 'platformEndpoint', 0, 5).name('平台厚度(无效)'); // 下沉顶点距离
+        gui.add(text, 'platformRot', -90, 90).name('平台旋转角度'); // 正负旋转角
+        gui.add(text, 'platformlength', 0.03, 10).name('平台延伸长度'); //平台延伸长度
+
+        gui.add(options, 'platformSidepane').name('显示平台侧板');//平台侧板
+        gui.add(text, 'platformSidepanelHeight', 0, 1).name('平台侧板高度'); //平台侧板高度
+        gui.add(text, 'platformSidepanelWidth', 0.001, 0.5).name('平台侧板宽度'); // 平台侧板高度宽度
+        gui.add(text, 'platformSidepanelZposition', -5, 5).name('平台侧板上面位移'); // 平台z position
+
+
+        var gui3 = new GUI();
+        // gui3.add(text3, 'long', 0.01, 20); // 最大、最小值
+        //  gui3.add(text3, 'width', 0.01, 5); // 最大、最小值
+        //  gui3.add(text3, 'height', 0.01, 5); // 最大、最小值
+        //  gui3.add(text3, 'stairnum', 1, 30); // 最大、最小值
+        //  gui3.add(text3, 'stairangle', -1, 1); // 最大、最小值
+        //  gui3.add(text3, 'endtop', 0, 5); // 最大、最小值
+        //  gui3.add(text3, 'begintop', 0, 20); // 最大、最小值
+        //  gui3.add(text3, 'moveposition', -5, 5); // 最大、最小值
+        gui3.add(options2, 'wireframe');
+        gui3.add(text3, 'Boardheight', 0.01, 0.5); // 最大、最小值
+        gui3.add(text3, 'Boardlength', 0.01, 0.5); // 最大、最小值
+        gui3.add(text3, 'Boardwidth', 0.01, 5); // 最大、最小值
+        gui3.add(options2, 'BuildPlaneSide');
+        gui3.add(text3, 'SidepanelHeight', 0, 1); // 最大、最小值
+        gui3.add(text3, 'SidepanelWidth', 0.001, 0.5); // 最大、最小值
+        gui3.add(text3, 'SidepanelBegintop', 0, 10); // 最大、最小值
+        gui3.add(text3, 'SidepanelEndtop', 0, 10); // 最大、最小值
+        gui3.add(text3, 'SidepanelZposition', -5, 5); // 最大、最小值
+        gui3.add(options2, 'Handrail').name('显示二段楼梯扶手');
+        //gui3.add(text3, 'HandrailWidth', 0, 5); // 最大、最小值
+        // gui3.add(text3, 'HandrailZposition', 0, 5); // 最大、最小值
+        //  gui3.add(text3, 'HandrailWidth', -1, 1); // 最大、-最小值
+        gui3.add(options2, 'U_type').name('U字形楼梯');
+
+        gui3.add(options2, 'railshow').name('显示栏杆');
+        gui3.add(options2, 'Glass').name('显示玻璃');
+        gui3.add(text3, 'Glasswidth', 0, 5).name('玻璃宽度'); // 最大、最小值
+        gui3.add(text3, 'Glasslength', -1, 1).name('玻璃长度'); // 最大、最小值
+        gui3.add(text3, 'Glassheight', -1, 1).name('玻璃高度'); // 最大、最小值
+        gui3.add(text3, 'GlasslZpostion', -1, 1).name('玻璃上面位移'); // 最大、最小值
+
+        // var gui4 = new GUI();
+        // gui4.add(options3, 'Spiral_type').name('显示旋转梯');
+        // gui4.add(text4, 'long', -2, 2).name('旋转梯主体长度'); // 最大、最小值
+        // gui4.add(text4, 'width', 0.01, 5).name('旋转梯主体外径'); // 最大、最小值
+        //
+        // gui4.add(text4, 'innerwidth', 0.01, 5).name('旋转梯主体内径'); // 最大、最小值
+        //
+        //
+        // gui4.add(text4, 'height', 0.01, 20).name('旋转梯主体高度');  // 最大、最小值
+        // gui4.add(text4, 'stairnum', 1, 100).name('旋转梯主体级数');  // 最大、最小值
+        // gui4.add(text4, 'stairangle', -1, 1); // 最大、最小值
+        // gui4.add(text4, 'endtop', 0, 5); // 最大、最小值
+        // gui4.add(text4, 'begintop', 0, 20); // 最大、最小值
+        // gui4.add(text4, 'moveposition', -5, 5); // 最大、最小值
+        //
+        // gui4.add(options3, 'wireframe').name('显示线框');
+        // ;
+        //
+        // gui4.add(text4, 'Boardheight', 0.01, 0.5).name('楼梯板高度'); // 最大、最小值
+        // gui4.add(text4, 'Boardlength', 0.01, 10).name('楼梯板延长'); // 最大、最小值
+        // gui4.add(text4, 'Boardwidth', 0.01, 5).name('楼梯板外径'); // 最大、最小值
+        // gui4.add(text4, 'Boardinnerwidth', 0.01, 5).name('楼梯板内径'); // 最大、最小值
+        //
+        // gui4.add(options3, 'BuildPlaneSide').name('侧板');
+        // gui4.add(text4, 'SidepanelHeight', 0, 1).name('侧板高度'); // 最大、最小值
+        // gui4.add(text4, 'SidepanelWidth', 0.001, 0.5).name('侧板宽度'); // 最大、最小值
+        // gui4.add(text4, 'SidepanelBegintop', 0, 10) // 最大、最小值
+        // gui4.add(text4, 'SidepanelEndtop', 0, 10) // 最大、最小值
+        // gui4.add(text4, 'SidepanelZposition', -5, 5).name('侧板上下位移'); // 最大、最小值
+        // gui4.add(options3, 'Handrail').name('显示扶手');
+        //
+        // gui4.add(text4, 'HandrailZposition', 0, 5).name('扶手上面位移'); // 最大、最小值
+        // gui4.add(text4, 'HandrailWidth', -0.2, 0.2).name('扶手内外扩'); // 最大、最小值
+        // gui4.add(text4, 'HandrailhandlX', 0.05, 1); // 最大、最小值
+
+
+        var gui2 = new GUI();
+        gui2.add(text2, 'light_positiom_X', -50, 50).name('方向光X'); // 最大、最小值
+        gui2.add(text2, 'light_positiom_Y', -50, 50).name('方向光Y'); // 最大、最小值
+        gui2.add(text2, 'light_positiom_Z', -50, 50).name('方向光Z'); // 最大、最小值
+
+
+        //gui.add(params, 'maxSize').min(0).step(0.25); // 最大值和步长
+    }
+
+</script>
+</body>
+</html>
